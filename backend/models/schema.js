@@ -34,6 +34,7 @@ export const Book=mongoose.model("Book",{
 export const Bill=mongoose.model("Bill",{
     billID:String,
     userId:String,
+    username:String,
     borrowDate: String,
     returnDate:String,
     expireDate:String,
@@ -41,23 +42,4 @@ export const Bill=mongoose.model("Bill",{
     borrowedBook:[{
         bookId:String
     }]
-});
-export const Plan=mongoose.model("Plan",{
-    planId: mongoose.Schema.Types.ObjectId,  // Trường làm khóa chính
-    title: String,
-    amount: Number,
-    duration: Number,
-    status: String,
-});
-export const PurchaseHistory=mongoose.model("PurchaseHistory",{
-    userId: String,
-    planName: String,
-    startDate: Date,
-    endDate: Date,
-    status: String,
-});
-export const Notifications=mongoose.model("Notifications",{
-    title: String,
-    content: String,
-    date: String
 });

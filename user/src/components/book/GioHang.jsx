@@ -11,6 +11,7 @@ function GioHang(props){
         const getBorrow = async () => {
             const res = await axios.get("http://localhost:5000/loans/getThisBill", {params: {userId: props.user.id}});
             setTT(res.data.tt);
+            console.log(res.data.tt)
             setNum(res.data.numOfBill);
         }
         getBorrow();
@@ -19,7 +20,7 @@ function GioHang(props){
       <div>
           <div>
             <Navigator user={props.user}/>
-            {(tt === 'YES' || numOfBill === 0) ? <MuonSach id={props.user.id} /> : <TraSach id={props.user.id}/>}
+            {(tt === 'YES' || numOfBill === 0) ? <MuonSach id={props.user.id} email={props.user.email} /> : <TraSach id={props.user.id}/>}
                    
         </div>
         <Footer></Footer> 

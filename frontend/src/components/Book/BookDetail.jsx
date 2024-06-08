@@ -4,21 +4,28 @@ import { useNavigate } from "react-router-dom";
 function BookDetail(props){
     let navigate = useNavigate();
     function handleDelete(){
-        const deleteBook = async () => {
-            try{
-                const res = await axios.post("http://localhost:5000/books/delete", {bookId: props.bookId});
-                console.log(res.data);
-                alert("Xóa thành công")
-            }catch(error){
-                console.log(error.message);
-                alert("Xóa thất bại")
+        var a=prompt("Press 'y' to delete books");
+            if(a==='y'){
+                const deleteBook = async () => {
+            
+                    try{
+                        const res = await axios.post("http://localhost:5000/books/delete", {bookId: props.bookId});
+                        console.log(res.data);
+                        alert("Xóa thành công")
+                    }catch(error){
+                        console.log(error.message);
+                        alert("Xóa thất bại")
+                    }
+                
             }
-        }
-        deleteBook();
-        navigate("/homepage");
+            deleteBook();
+           
+            navigate("/homepage");
+            }
+        
     }
     function handleEdit(){
-        navigate(`/managebook/${props.bookId}`)
+        navigate(`/managebook/${props.key1}`)
     }
     return (
         <tr>

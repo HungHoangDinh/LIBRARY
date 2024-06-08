@@ -59,7 +59,7 @@ function ManageLoan(){
                                         <tr>
                                             <th>#</th>
                                             <th>Bill ID</th>
-                                            <th>Student ID</th>
+                                            <th>Student Email</th>
                                             <th>Borrow Date</th>
                                             <th>Return date</th>
                                             <th>Status</th>
@@ -68,14 +68,14 @@ function ManageLoan(){
                                     </thead>
                                     <tbody>
                                         {bills.length > 0 && bills.map(bill => {
-                                            return <LoanRow key={bill.billID} stt={i++} billID={bill.billID} userId={bill.userId} borrowDate={bill.borrowDate} returnDate={bill.returnDate} state={bill.state}/>
+                                            return <LoanRow key={bill.billID} stt={i++} billID={bill.billID} username={bill.username} borrowDate={bill.borrowDate} returnDate={bill.returnDate} state={bill.state}/>
                                         })}
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <td><strong>#</strong></td>
                                             <td><strong>Bill ID</strong></td>
-                                            <td><strong>Student ID</strong></td>
+                                            <td><strong>Student Email</strong></td>
                                             <td><strong>Borrow Date</strong></td>
                                             <td><strong>Return date</strong></td>
                                             <td><strong>Status</strong></td>

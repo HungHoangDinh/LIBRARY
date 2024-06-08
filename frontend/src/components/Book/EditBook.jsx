@@ -10,12 +10,14 @@ function EditBook(){
     let navigate = useNavigate();
     const { bookId } = useParams();
     const [book, setBook] = useState({});
+    var k="";
     useEffect(() => {
         const getBook = async () => {
             try{
-                const res = await axios.get("http://localhost:5000/books/uniquebook", {params:{bookId: bookId}});
+                const res = await axios.get("http://localhost:5000/books/uniquebook", {params:{id: bookId}});
                 setBook(res.data);
                 console.log(res.data);
+                k=res.data.amount-res.data.available;
             }catch(error){
                 console.log(error.message);
             }
@@ -48,28 +50,41 @@ function EditBook(){
     
     function handleChange(event){
         setBook(prebook => {
-            return {
-                ...prebook,
-                [event.target.name]:event.target.value
+            if(event.target.name=="amount"){
+                return {
+                    ...prebook,
+                    [event.target.name]:event.target.value,
+                    available: event.target.value-k
+                }
+            }
+            else{
+                return {
+                    ...prebook,
+                    [event.target.name]:event.target.value
+                }
             }
         })
     }
     function handleBack(){
-        navigate("/");
+        navigate("/managebook");
     }
-    function handleSubmit(){
-        const updateBook = async () => {
-            try{
-                const res = await axios.post("http://localhost:5000/books/update", book);
-                console.log(res.data);
-                alert("Cập nhật thành công");
-            }catch(error){
-                alert("Lỗi cập nhật")
+    function handleSubmit(event){
+        event.preventDefault();
+        var a=prompt("Press 'y' to submit")
+        if(a==='y'){
+            const updateBook = async () => {
+                try{
+                    const res = await axios.post("http://localhost:5000/books/update", book);
+                    console.log(res.data);
+                    alert("Cập nhật thành công");
+                }catch(error){
+                    alert("Lỗi cập nhật")
+                }
+                
             }
-            
+            updateBook();
+            navigate("/managebook");
         }
-        updateBook();
-        navigate("/homepage");
     }
     return (
         <div id="wrapper">
@@ -139,7 +154,7 @@ function EditBook(){
                                                         <div className="mb-3"><label className="form-label" for="username"><strong>Book Title</strong></label><input className="form-control" type="text" id="book-title" name="name" value={book.name} onChange={handleChange}/></div>
                                                     </div>
                                                     <div className="col">
-                                                        <div className="mb-3"><label className="form-label" for="username"><strong>Book ID</strong></label><input className="form-control" type="text" id="bookID" name="bookId" value={book.bookId} readOnly/></div>
+                                                        <div className="mb-3"><label className="form-label" for="username"><strong>Book Tag</strong></label><input className="form-control" type="text" id="bookID" name="bookId" value={book.bookId} readOnly/></div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
@@ -164,9 +179,7 @@ function EditBook(){
                                                     <div className="col">
                                                         <div className="mb-3"><label className="form-label" for="first_name"><strong>Amount</strong></label><input className="form-control" type="text" id="amount" name="amount" value={book.amount} onChange={handleChange}/></div>
                                                     </div>
-                                                    <div className="col">
-                                                        <div className="mb-3"><label className="form-label" id="available" for="last_name"><strong>Available</strong></label><input className="form-control" type="text" id="publisher-1" name="available" value={book.available} onChange={handleChange}/></div>
-                                                    </div>
+                                                  
                                                 </div>
                                                 <div className="row">
                                                     <div className="col">
@@ -185,7 +198,7 @@ function EditBook(){
                 }</div>
             <footer classNameName="bg-white sticky-footer">
                 <div className="container my-auto">
-                    <div className="text-center my-auto copyright"><span>Copyright © Brand 2023</span></div>
+                    <div className="text-center my-auto copyright"><span>Copyright © Brand 2024</span></div>
                 </div>
             </footer>
         </div><a className="border rounded d-inline scroll-to-top" href="http://localhost:3000/"><i className="fas fa-angle-up"></i></a>

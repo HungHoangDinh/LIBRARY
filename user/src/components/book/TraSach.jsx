@@ -12,7 +12,6 @@ function TraSach(props){
     const [billID, setBillID] = useState('');
     useEffect(() => {
         const getBooks = async () => {
-            console.log("Trả sách");
             const res = await axios.get("http://localhost:5000/loans/getNoneLoan", {params: {userId: props.id}})
             setItems(res.data.books);
             setBorrowDate(res.data.borrowDate)
@@ -48,19 +47,7 @@ function TraSach(props){
             </div><button className="btn btn-outline-success" type="button" style={{transform: 'translateX(811px) translateY(-363px) scale(0.70)',background: 'rgb(237,203,203)',borderColor: 'rgb(0,0,0)',width: 41}}><i className="fa fa-close border-primary" style={{color: 'rgb(0,0,0)',transform: 'translateX(0px) scale(1.49)'}}></i></button></div>
         )
     }
-    async function handleReturnBook(){
-        var currentDate = new Date();
-        var year = currentDate.getFullYear();
-        var month = currentDate.getMonth() + 1;
-        var day = currentDate.getDate();
-        var formattedDate = year + '-' + month + '-' + day;
-        console.log("Trả sách");
-        const res1 = await axios.post("http://localhost:5000/loans/returnBill", {billID: billID, returnDate: formattedDate});
-        const res2 = await axios.post("http://localhost:5000/books/returnBook", items);
-        console.log(res1.data);
-        alert("Trả sách thành công")
-        navigate("/book")
-    }
+  
     return(
         <main className="page shopping-cart-page">
             {books.length > 0 &&
@@ -82,7 +69,7 @@ function TraSach(props){
                                         <h4><span className="text">Mã đơn</span><span className="price">{billID}</span></h4>
                                         <h4><label className="form-label" style={{width: '247.0938px',fontSize: '16px',fontWeight: 'bold'}}>Ngày mượn:</label><input type="date" style={{fontSize: 15}} value={borrowDate} readOnly/></h4>
                                         <h4><label className="form-label" style={{width: '247.0938px',fontSize: '16px',fontWeight: 'bold'}}>Ngày hết hạn</label><input type="date" style={{fontSize: 15}} value={expireDate} readOnly/></h4>
-                                        <div style={{height: 18}}></div><button className="btn btn-primary btn-lg d-block w-100" type="button" onClick={handleReturnBook}>Xác nhận trả sách</button>
+                                        <div style={{height: 18}}></div><button className="btn btn-primary btn-lg d-block w-100" type="button" readOnly>Trả sách để mượn sách khác</button>
                                     </div>
                                 </div>
                             </div>

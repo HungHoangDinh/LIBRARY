@@ -9,9 +9,9 @@ function MuonSach(props){
     const [items, setItems] = useState(cart);
     useEffect(() => {
         const getBooks = async () => {
+            console.log(cart)
             const res = await axios.get("http://localhost:5000/books/getTempCart", {params: {cart: cart}})
             setBooks(res.data);
-            console.log(cart);
         }
         if(cart.length > 0){
             getBooks();
@@ -55,19 +55,22 @@ function MuonSach(props){
            const bill = {
                 billID: billID,
                 userId: props.id,
+                username:props.email,
                 borrowDate: borrowDate,
                 returnDate: 'None',
                 expireDate: expireDate,
                 state: 'Borrowed',
                 borrowedBook: borrowedBook
             }
+            console.log(props)
             const res2 = await axios.post("http://localhost:5000/books/borrowBook", cart);
-            console.log(res2);
-            console.log(cart);
+           
+         
             cart.splice(0, cart.length);
-            console.log(cart);
+            
             const res1 = await axios.post("http://localhost:5000/loans/", bill);
             alert("Mượn thành công")
+            navigate("/homepage")
         }
         else{
             alert("Tồn tại đơn chưa trả")
@@ -77,7 +80,7 @@ function MuonSach(props){
         function handleDelete(){
             const newItems = [...items];
             for(let i = 0; i < cart.length; i++){
-                if(cart[i] === props.bookId){
+                if(cart[i] === props.id){
                     cart.splice(i, 1);
                     newItems.splice(i,1)
                     setItems(newItems)
@@ -140,7 +143,7 @@ function MuonSach(props){
                                 return (
                                     <div className="row g-0">
                                         <div className="col-md-12 col-lg-8" style={{height: 415.188}}>
-                                            <Book bookId={book.bookId} name={book.name} author={book.author} category={book.category} publishor={book.publishor} image={book.image}/>
+                                            <Book id={book._id} name={book.name} author={book.author} category={book.category} publishor={book.publishor} image={book.image}/>
                                         </div>
                                         <div className="col-md-12 col-lg-4">
                                             <div className="bg-body-tertiary summary">

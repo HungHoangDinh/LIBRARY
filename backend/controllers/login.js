@@ -39,6 +39,7 @@ export const userlogin = async (req, res) => {
                         user:{
                             id:user._id,
                             name:user.name,
+                            email:user.email,
                             penaltyNumber:user.penaltyNumber,
                             isChecked:user.isChecked,
                             isMember:user.isMember,

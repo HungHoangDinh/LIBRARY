@@ -1,14 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import axios from "axios";
 import Navigator from "../Hung/Navigator";
 import SearchBoard from "../Hung/SearchBoard";
 import Footer from "../Hung/Footer";
 function LoanDetail(){
     var i = 1;
-
+    let location=useLocation();
     let navigate = useNavigate();
     function handleBack(){
         navigate("/manageLoan");
@@ -25,6 +25,7 @@ function LoanDetail(){
             </tr>
         )
     }
+    const [k1,setK]=useState("");
     const { billID } = useParams();
     const [bill, setBill] = useState({})
     const [books, setBook] = useState([])
@@ -32,31 +33,54 @@ function LoanDetail(){
         setBill(preBill => {
             return {
                 ...preBill,
-                [event.target.name]: event.target.value
+                [event.target.name]: event.target.value,
+                
             }
         })
     }
     function handleUpdate(event){
-        const updateBill = async () => {
-            try{
-                const res = await axios.post("http://localhost:5000/loans/update", bill);
-                console.log(res.data);
-                alert("Cập nhật thành công");
-            }catch(error){
-                alert("Lỗi cập nhật")
+        event.preventDefault();
+        const a=prompt("Press 'y' to confirm the update");
+   
+   
+        if(a==='y'){
+            const updateBill = async () => {
+                try{
+                    if(k1==="None" &&bill.state=="Returned"){
+                        let now = new Date();
+
+                        // Lấy ngày, tháng, năm
+                        let day = now.getDate();
+                        let month = now.getMonth() + 1; // Tháng trong JavaScript bắt đầu từ 0, nên cần cộng thêm 1
+                        let year = now.getFullYear()
+                        let dateString = year + '-' + month + '-' + day;
+                        bill.returnDate=dateString;
+                    }
+                    const res = await axios.post("http://localhost:5000/loans/update", bill);
+                    console.log(res.data);
+                    alert("Cập nhật thành công");
+                }catch(error){
+                    alert("Lỗi cập nhật")
+                }
+                
             }
+            updateBill();
+            navigate("/manageLoan");
+        }else{
             
+            navigate(location.pathname);
         }
-        updateBill();
-        navigate("/manageLoan");
+        
     }
     useEffect (() => {
         const getBill = async () => {
             try{
                 const res = await axios.get("http://localhost:5000/loans/unique", {params:{billID: billID}});
                 setBill(res.data.bill);
+                setK(res.data.bill.returnDate);
+                
                 setBook(res.data.books);
-                console.log(res.data);
+                
             }catch(error){
                 console.log(error.message);
             }
@@ -83,7 +107,7 @@ function LoanDetail(){
                                         <div className="mb-3"><label className="form-label" for="username"><strong>BILL ID</strong></label><input className="form-control" type="text" value={bill.billID}/></div>
                                     </div>
                                     <div className="col">
-                                        <div className="mb-3"><label className="form-label" for="username"><strong>USER ID</strong></label><input className="form-control" type="text" id="bookID" name="userId" value={bill.userId}/></div>
+                                        <div className="mb-3"><label className="form-label" for="username"><strong>USER EMAIL</strong></label><input className="form-control" type="text" id="bookID" name="userId" value={bill.username}/></div>
                                     </div>
                                 </div>
                                 <div className="row">

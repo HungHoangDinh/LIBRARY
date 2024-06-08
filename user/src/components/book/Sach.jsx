@@ -20,22 +20,24 @@ function Sach(props){
         if (cart.length === 5 - props.user.penaltyNumber) {
             alert("Số sách mượn quá giới hạn, chuyển đến trang giỏ sách để xác nhận mượn sách")
           }
-        else if(books.filter(function (book){return book.bookId === s})[0].available === 0){
+        else if(books.filter(function (book){return book._id === s})[0].available === 0){
             alert("Sách cần mượn đã hết")
         }
         else {
             cart.push(s);
+        
           }
     }
-    function Book(props){
+    function Book(prop){
         function handleClick(){
-            navigate(`/book-detail/${props.bookId}`)
+
+            navigate(`/book-detail/${prop.id}`)
         }
         return(
             <div className="col-12 col-md-6 col-lg-4">
-                <div className="clean-product-item"><a className="btn cursor-pointer" role="button" onClick={() => handleAddToCart(props.bookId)}><i className="fa fa-shopping-cart" data-bss-hover-animate="pulse" style={{fontSize: 27}}></i></a>
-                    <div className="image"><a className="cursor-pointer" onClick={handleClick}><img className="img-fluid cd-block mx-auto" data-bss-hover-animate="pulse" src={props.image} alt="xyz"/></a></div>
-                    <div className="product-name"><a className="cursor-pointer" onClick={handleClick}>{props.name}</a></div>
+                <div className="clean-product-item"><a className="btn cursor-pointer" role="button" onClick={() => handleAddToCart(prop.id)}><i className="fa fa-shopping-cart" data-bss-hover-animate="pulse" style={{fontSize: 27}}></i></a>
+                    <div className="image"><a className="cursor-pointer" onClick={handleClick}><img className="img-fluid cd-block mx-auto" data-bss-hover-animate="pulse" src={prop.image} alt="xyz"/></a></div>
+                    <div className="product-name"><a className="cursor-pointer" onClick={handleClick}>{prop.name}</a></div>
                     <div className="about">
                         
                     </div>
@@ -166,7 +168,7 @@ function Sach(props){
                                     <div className="products">
                                         <div className="row g-0">
                                             {books.length > 0 && books.map(book => {
-                                                return <Book name={book.name} image={book.image} bookId={book.bookId}/>
+                                                return <Book name={book.name} image={book.image} id={book._id}/>
                                             })}
                                         </div>
                                         <nav>

@@ -15,7 +15,7 @@ function XemChiTiet(props){
     useEffect(() => {
         const getBook = async () => {
             try{
-                const res = await axios.get("http://localhost:5000/books/uniquebook", {params:{bookId: bookId}});
+                const res = await axios.get("http://localhost:5000/books/uniquebook", {params:{_id: bookId}});
                 setBook(res.data);
                 console.log(res.data);
                 const res1 = await axios.get("http://localhost:5000/books/category", {params: {page: 1, limit: 3, question: res.data.category}});
@@ -32,17 +32,18 @@ function XemChiTiet(props){
         if (cart.length === 5 - props.user.penaltyNumber) {
             alert("Số sách mượn quá giới hạn, chuyển đến trang giỏ sách để xác nhận mượn sách")
           }
-          else if(books.filter(function (book){return book.bookId === bookId})[0].available === 0){
+          else if(books.filter(function (book){return book._id === bookId})[0].available === 0){
             alert("Sách cần mượn đã hết")
         } 
           else {
+            console.log(bookId)
             cart.push(bookId);
           }
     }
     function OtherBook(props){
         function handleView(){
-            navigate(`/user/home/${props.bookId}`)
-            setID(props.bookId)
+            navigate(`/book-detail/${props.id}`)
+            setID(props.id)
         }
         return(
             <div className="col-sm-6 col-lg-4">
@@ -124,7 +125,7 @@ function XemChiTiet(props){
                                 <div className="items">
                                     <div className="row justify-content-center">
                                         {books.map((b) => {
-                                            return <OtherBook bookId={b.bookId} name={b.name} image={b.image}/>
+                                            return <OtherBook id={b._id} name={b.name} image={b.image}/>
                                         })}
                                     </div>
                                 </div>

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import BookDetail from "./BookDetail";
 import Navigator from "../Hung/Navigator";
 import axios from "axios";
+import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBoard from "../Hung/SearchBoard";
 function ManageBook(){
     var i = 1;
@@ -10,48 +11,51 @@ function ManageBook(){
     const [books, setBooks] = useState([]);
     const [search, setSearch] = useState("");
     const [question, setQuestion] = useState("")
-    useEffect(() => {
-        const getBooks = async () => {
-            try{
-                if (search === "name"){
-                    console.log("name");
-                    const res = await axios.get("http://localhost:5000/books/name", {params: {page: page, limit: limit, question: question}});
-                    setBooks(res.data);
-                    console.log(page);
-                }
-                else if(search === "bookId"){
-                    console.log("bookId");
-                    const res = await axios.get("http://localhost:5000/books/bookId", {params: {page: page, limit: limit, question: question}});
-                    setBooks(res.data);
-                    console.log(page);
-                }
-                else if(search === "author"){
-                    console.log("author");
-                    const res = await axios.get("http://localhost:5000/books/author", {params: {page: page, limit: limit, question: question}})
-                    setBooks(res.data);
-                    console.log(page);
-                }
-                else if(search === "publishor"){
-                    console.log("publishor");
-                    const res = await axios.get("http://localhost:5000/books/publishor", {params: {page: page, limit: limit, question: question}});
-                    setBooks(res.data);
-                    console.log(page);
-                }
-                else if(search === "category"){
-                    console.log("category");
-                    const res = await axios.get("http://localhost:5000/books/category", {params: {page: page, limit: limit, question: question}});
-                    setBooks(res.data);
-                    console.log(page);
-                }else{
-                    console.log("abc");
-                    const res = await axios.get("http://localhost:5000/books/page", {params: {page: page, limit: limit}});
-                    setBooks(res.data);
-                    console.log(page);
-                }
-            }catch(error){
-                console.log(error.message);
+    const location = useLocation();
+    const navigate = useNavigate();
+     const getBooks = async () => {
+        try{
+            if (search === "name"){
+                console.log("name");
+                const res = await axios.get("http://localhost:5000/books/name", {params: {page: page, limit: limit, question: question}});
+                setBooks(res.data);
+                console.log(page);
             }
+            else if(search === "bookId"){
+                console.log("bookId");
+                const res = await axios.get("http://localhost:5000/books/bookId", {params: {page: page, limit: limit, question: question}});
+                setBooks(res.data);
+                console.log(page);
+            }
+            else if(search === "author"){
+                console.log("author");
+                const res = await axios.get("http://localhost:5000/books/author", {params: {page: page, limit: limit, question: question}})
+                setBooks(res.data);
+                console.log(page);
+            }
+            else if(search === "publishor"){
+                console.log("publishor");
+                const res = await axios.get("http://localhost:5000/books/publishor", {params: {page: page, limit: limit, question: question}});
+                setBooks(res.data);
+                console.log(page);
+            }
+            else if(search === "category"){
+                console.log("category");
+                const res = await axios.get("http://localhost:5000/books/category", {params: {page: page, limit: limit, question: question}});
+                setBooks(res.data);
+                console.log(page);
+            }else{
+                console.log("abc");
+                const res = await axios.get("http://localhost:5000/books/page", {params: {page: page, limit: limit}});
+                setBooks(res.data);
+                console.log(page);
+            }
+        }catch(error){
+            console.log(error.message);
         }
+    }
+    useEffect(() => {
+    
         getBooks();
     }, [page])
     function handleFirstPage(){
@@ -289,8 +293,8 @@ function ManageBook(){
                                     </thead>
                                     <tbody>
                                         {books.length > 0 && books.map(book => {
-                                            return <BookDetail stt={i++} bookId={book.bookId} name={book.name} author={book.author} publishor={book.publishor} category={book.category} amount={book.amount} available={book.available}/>
-                                        })}
+                                            return <BookDetail stt={i++} bookId={book.bookId} key1={book._id} name={book.name} author={book.author} publishor={book.publishor} category={book.category} amount={book.amount} available={book.available}  />
+                                        })} 
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -328,7 +332,7 @@ function ManageBook(){
             </div>
             <footer className="bg-white sticky-footer">
                 <div className="container my-auto">
-                    <div className="text-center my-auto copyright"><span>Copyright © Brand 2023</span></div>
+                    <div className="text-center my-auto copyright"><span>Copyright © Brand 2024</span></div>
                 </div>
             </footer>
         </div><a className="border rounded d-inline scroll-to-top" href="#page-top"><i className="fas fa-angle-up"></i></a>

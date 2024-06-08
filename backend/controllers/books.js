@@ -10,9 +10,9 @@ export const getBooks = async (req, res) => {
 
 export const getBook = async (req, res) => {
   try {
-    console.log(req.query.bookId);
+    console.log(req.query);
     const { bookId } = req.query;
-    const book = await Book.findOne({ bookId });
+    const book = await Book.findOne({ _id: req.query._id});
     return res.status(200).json(book);
   } catch (err) {
     console.error(err);
@@ -349,11 +349,11 @@ export const userSearchLastPage = async (req, res) => {
 
 export const getBookInTempCart = async (req, res) => {
   try{
-    console.log(req.query.cart);
+    
     const cart = req.query.cart;
     const books = [];
     for (let i = 0; i <  cart.length; i++){
-      const book = await Book.findOne({bookId: cart[i]})
+      const book = await Book.findOne({_id: cart[i]})
       books.push(book);
     }
     res.status(200).json(books);
@@ -368,35 +368,22 @@ export const borrowBook = async (req, res) => {
     console.log(req.body);
     const cart = req.body;
     await Promise.all(cart.map(async (bookId) => {
+      
       const result = await Book.findOneAndUpdate(
-        { bookId },
+        { _id:bookId },
         { $inc: { available: -1 } },
         { new: true }
       );
     }));
     // console.log(cart[0]);
-    const book = await Book.findOne({bookId: cart[0]})
+    const book = await Book.findOne({_id: cart[0]})
     res.status(200).json(book)
   }catch(error){
 
   }
 }
 
-export const returnBook = async (req, res) => {
-  try{
-    console.log(req.body);
-    const cart = req.body;
-    await Promise.all(cart.map(async (bookId) => {
-      const result = await Book.findOneAndUpdate(
-        { bookId },
-        { $inc: { available: +1 } },
-        { new: true }
-      );
-    }));
-  }catch(error){
 
-  }
-}
 export const totalBook=async(req,res)=>{
   Book.find().then(result=>{
     res.status(200).json({

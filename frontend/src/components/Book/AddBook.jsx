@@ -19,14 +19,23 @@ function AddBook(){
         description:""
     });
     function handleBack(){
-        navigate("/");
+        navigate("/managebook");
     } 
     function handleChange(event){
         setBook(prebook => {
-            return {
-                ...prebook,
-                [event.target.name]:event.target.value
+            if(event.target.name=="amount"){
+                return {
+                    ...prebook,
+                    [event.target.name]:event.target.value,
+                    available: event.target.value
+                }
+            }else{
+                return {
+                    ...prebook,
+                    [event.target.name]:event.target.value
+                }
             }
+            
         })
     }
     function handleButtonClick(){
@@ -48,18 +57,24 @@ function AddBook(){
         }
         event.target.value = null;
     }
-    function handleSubmit(){
-        const addBook = async () => {
-            try{
-                const res = await axios.post("http://localhost:5000/books/", book);
-                console.log(res.data);
-                alert("Thêm thành công");
-            }catch(error){
-                alert("Thêm thất bại");
+    function handleSubmit(event){
+        event.preventDefault();
+        var a=prompt("Press 'y' to add book")
+        if(a==="y"){
+            const addBook = async () => {
+                try{ 
+                    
+                    const res = await axios.post("http://localhost:5000/books/", book);
+                    console.log(res.data);
+                    alert("Thêm thành công");
+                }catch(error){
+                    alert("Thêm thất bại");
+                }
             }
+            addBook();
+            navigate("/managebook")
         }
-        addBook();
-        navigate("/homepage")
+        
     }
     return (
         <div id="wrapper">
@@ -130,7 +145,7 @@ function AddBook(){
                                                         <div className="mb-3"><label className="form-label" for="username"><strong>Book Title</strong></label><input className="form-control" type="text" id="book-title" name="name" value={book.name} onChange={handleChange}/></div>
                                                     </div>
                                                     <div className="col">
-                                                        <div className="mb-3"><label className="form-label" for="username"><strong>Book ID</strong></label><input className="form-control" type="text" id="bookID" name="bookId" value={book.bookId} onChange={handleChange}/></div>
+                                                        <div className="mb-3"><label className="form-label" for="username"><strong>Book Tag</strong></label><input className="form-control" type="text" id="bookID" name="bookId" value={book.bookId} onChange={handleChange}/></div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
@@ -155,16 +170,14 @@ function AddBook(){
                                                     <div className="col">
                                                         <div className="mb-3"><label className="form-label" for="first_name"><strong>Amount</strong></label><input className="form-control" type="text" id="amount" name="amount" value={book.amount} onChange={handleChange}/></div>
                                                     </div>
-                                                    <div className="col">
-                                                        <div className="mb-3"><label className="form-label" id="available" for="last_name"><strong>Available</strong></label><input className="form-control" type="text" id="publisher-1" name="available" value={book.available} onChange={handleChange}/></div>
-                                                    </div>
+                                                    
                                                 </div>
                                                 <div className="row">
                                                     <div className="col">
                                                         <div className="mb-3"><label id="available-1" className="form-label" for="last_name"><strong>Description</strong></label></div><textarea className="form-control" rows="6" name="description" value={book.description} onChange={handleChange}></textarea>
                                                     </div>
                                                 </div>
-                                                <div className="mb-3"><button className="btn btn-success btn-sm" type="submit" style={{marginTop: 17}}>Update</button><button className="btn btn-secondary btn-sm" onClick={handleBack} style={{marginTop: 17, marginLeft: 5}}>Back</button></div>
+                                                <div className="mb-3"><button className="btn btn-success btn-sm" type="submit" style={{marginTop: 17}}>Save</button><button className="btn btn-secondary btn-sm" onClick={handleBack} style={{marginTop: 17, marginLeft: 5}}>Back</button></div>
                                             </form>
                                         </div>
                                     </div>
@@ -176,7 +189,7 @@ function AddBook(){
             </div>
             <footer className="bg-white sticky-footer">
                 <div className="container my-auto">
-                    <div className="text-center my-auto copyright"><span>Copyright © Brand 2023</span></div>
+                    <div className="text-center my-auto copyright"><span>Copyright © Brand 2024</span></div>
                 </div>
             </footer>
         </div><a className="border rounded d-inline scroll-to-top" href="http://localhost:3000/"><i className="fas fa-angle-up"></i></a>

@@ -14,7 +14,7 @@ export const getLoan = async (req, res) => {
         const bill = await Bill.findOne({ billID });
         const books = [];
         for (let i = 0; i < bill.borrowedBook.length; i++){
-            const book = await Book.findOne({bookId: bill.borrowedBook[i].bookId})
+            const book = await Book.findOne({_id: bill.borrowedBook[i].bookId})
             books.push(book);
         }
         const result = {
@@ -30,7 +30,6 @@ export const getLoan = async (req, res) => {
 export const updateState = async (req, res) => {
     try{
         const bills = await Bill.find({returnDate: 'None'});
-        console.log(bills);
         const today = new Date();
         await Promise.all(bills.map(async (bill) => {
             if (new Date(bill.expireDate) < today) {
@@ -59,7 +58,6 @@ export const createLoan = async (req, res) => {
 export const updateLoan = async (req, res) => {
     try{
         const updateBill = req.body;
-        console.log(updateBill);
         const book = await Bill.findOneAndUpdate({billID: updateBill.billID}, updateBill, {new: true});
         console.log("Thành công");
         res.status(200).json({tt: "OK"})
@@ -75,7 +73,7 @@ export const getThisLoan = async (req, res) => {
         const bills = await Bill.find({userId: req.query.userId});
         var flag = true;
         for(let i = 0; i < bills.length; i++){
-            if(bills[i].returnDate === 'None'){
+            if(bills[i].state !== 'Returned'){
                 flag = false;
                 break;
             }
@@ -110,17 +108,4 @@ export const getNoneLoan = async (req, res) => {
     }catch(error){
 
     }
-};
-
-export const returnBill = async (req, res) => {
-    try{
-        console.log(req.body.billID);
-        const billID = req.body.billID;
-        const returnDate = req.body.returnDate
-        await Bill.updateOne({ billID: billID }, { $set: { state: 'Returned', returnDate: returnDate } });
-        res.status(200).json({tt:"ok"})
-    }catch(err){
-        res.status(500).json({tt:"err"})
-    }
-    
 };

@@ -8,7 +8,7 @@ function LoanRow(props){
         <tr>
             <td>{props.stt}</td>
             <td>{props.billID}</td>
-            <td>{props.userId}</td>
+            <td>{props.username}</td>
             <td>{props.borrowDate}</td>
             <td>{props.returnDate}</td>
             <td>{props.state}</td>
