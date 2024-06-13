@@ -38,14 +38,7 @@ export const userlogin = async (req, res) => {
                         state:"ok",
                         user:{
                             id:user._id,
-                            name:user.name,
                             email:user.email,
-                            penaltyNumber:user.penaltyNumber,
-                            isChecked:user.isChecked,
-                            isMember:user.isMember,
-                            avatar:user.avatar,
-                            googleId:user.googleId,
-				            facebookId:user.facebookId
                         }
                     });
                 }
@@ -69,9 +62,8 @@ export const adminRegister = async (req, res) => {
             bcrypt.hash(req.body.password, saltRounds).then(function(hash) {
                 // Store hash in your password DB.
                 const newUser=new Admin({
-                    name: req.body.name,
+                    
                     email:req.body.email,
-                    phone:req.body.phone,
                     password:hash
                 });
                 newUser.save().then((result)=>id=result._id).catch((err)=>console.log(err));
@@ -87,24 +79,15 @@ export const adminRegister = async (req, res) => {
 
 };
 export const userRegister = async (req, res) => {
-    const email1=req.body.params.email;
+    const email1=req.body.email;
     User.exists({email:email1}).then((result)=>{
         if(result===null){
             var id;
-            bcrypt.hash(req.body.params.password, saltRounds).then(function(hash) {
+            bcrypt.hash(req.body.password, saltRounds).then(function(hash) {
                 // Store hash in your password DB.
                 const newUser=new User({
-                    name: req.body.params.name,
-                    phone:req.body.params.phone,
-                    email:req.body.params.email,
+                    email:req.body.email,
                     password:hash,
-                    googleId:"",
-                    facebookId:"",
-                    penaltyNumber:0,
-                    resetToken:"",
-                    isChecked:false,
-                    isMember:true,
-                    avatar:""
                 });
                 newUser.save().then((result)=>{
                    
@@ -112,13 +95,7 @@ export const userRegister = async (req, res) => {
                         state:"oke",
                         user:{
                             id:result._id,
-                            name:newUser.name,
-                            penaltyNumber:newUser.penaltyNumber,
-                            isChecked:newUser.isChecked,
-                            isMember:newUser.isMember,
-                            avatar:newUser.avatar,
-                            googleId:newUser.googleId,
-                            facebookId:newUser.facebookId
+                           
                         }
                     });
                 }).catch((err)=>console.log(err));

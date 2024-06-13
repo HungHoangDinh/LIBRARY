@@ -1,23 +1,11 @@
 import mongoose from 'mongoose'
 const userSchema=new mongoose.Schema({ 
-    name:String,
-    phone:String,
     email:String,
     password:String, 
-    googleId: String,
-    facebookId:String,
-    resetToken:String,
-    penaltyNumber:Number,
-    isChecked:Boolean,
-    isMember:Boolean,
-    resetToken:String,
-    avatar:String,
 });
 export const User=mongoose.model("User",userSchema);
 export const Admin=mongoose.model("Admin",{
-    name:String,
     email:String,
-    phone: String,
     password:String
 });
 export const Book=mongoose.model("Book",{

@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-import avatar from "../img/koduck.png"
+import avatar from "../img/hust.jpg"
 const URL="http://localhost:5000/";
 function Login(pros){
     let navigate=useNavigate();

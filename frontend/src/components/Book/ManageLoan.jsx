@@ -85,19 +85,9 @@ function ManageLoan(){
                             </div>
                             <div className="row">
                                 <div className="col-md-6 align-self-center">
-                                    <p id="dataTable_info" className="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
+                                    
                                 </div>
-                                <div className="col-md-6">
-                                    <nav className="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul className="pagination">
-                                            <li className="page-item disabled"><a className="page-link" aria-label="Previous" href="http://localhost:3000/"><span aria-hidden="true">«</span></a></li>
-                                            <li className="page-item active"><a className="page-link" href="http://localhost:3000/">1</a></li>
-                                            <li className="page-item"><a className="page-link" href="http://localhost:3000/">2</a></li>
-                                            <li className="page-item"><a className="page-link" href="http://localhost:3000/">3</a></li>
-                                            <li className="page-item"><a className="page-link" aria-label="Next" href="http://localhost:3000/"><span aria-hidden="true">»</span></a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -105,7 +95,7 @@ function ManageLoan(){
             </div>
             <footer className="bg-white sticky-footer">
                 <div className="container my-auto">
-                    <div className="text-center my-auto copyright"><span>Copyright © Brand 2023</span></div>
+                    <div className="text-center my-auto copyright"><span>Copyright © Brand 2024</span></div>
                 </div>
             </footer>
         </div><a className="border rounded d-inline scroll-to-top" href="#page-top"><i className="fas fa-angle-up"></i></a>

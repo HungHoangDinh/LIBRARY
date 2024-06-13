@@ -15,7 +15,7 @@ function XemChiTiet(props){
     useEffect(() => {
         const getBook = async () => {
             try{
-                const res = await axios.get("http://localhost:5000/books/uniquebook", {params:{_id: bookId}});
+                const res = await axios.get("http://localhost:5000/books/uniquebook", {params:{id: bookId}});
                 setBook(res.data);
                 console.log(res.data);
                 const res1 = await axios.get("http://localhost:5000/books/category", {params: {page: 1, limit: 3, question: res.data.category}});
@@ -29,10 +29,7 @@ function XemChiTiet(props){
         getBook();
     }, [id])
     function handleAddtoCart(){
-        if (cart.length === 5 - props.user.penaltyNumber) {
-            alert("Số sách mượn quá giới hạn, chuyển đến trang giỏ sách để xác nhận mượn sách")
-          }
-          else if(books.filter(function (book){return book._id === bookId})[0].available === 0){
+         if(books.filter(function (book){return book._id === bookId})[0].available === 0){
             alert("Sách cần mượn đã hết")
         } 
           else {

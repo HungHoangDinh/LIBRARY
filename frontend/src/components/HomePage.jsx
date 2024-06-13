@@ -4,22 +4,23 @@ import Earning from "./Hung/Earning";
 import Revenue from "./Hung/Revenue";
 import Footer from "./Hung/Footer";
 import SearchBoard from './Hung/SearchBoard'
+import background from '../img/hust.jpg'
 function HomePage(props){
     return (
         <div  id="page-top">
             <div id="wrapper">
             <Navigator state={props.state}></Navigator>
         <div className="d-flex flex-column" id="content-wrapper">
-            <div id="content">
+            <div id="content" >
                 <SearchBoard></SearchBoard>
                 <div className="container-fluid">
                     <div className="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 className="text-dark mb-0">Dashboard</h3>
                     </div>
-                    <Data></Data>
-                    <div className="row">
-                        <Earning></Earning>
-                        <Revenue></Revenue>
+                    <div className="row"  >
+                    
+
+                        
                     </div>
                     
                 </div>

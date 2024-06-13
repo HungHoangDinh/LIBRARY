@@ -42,38 +42,43 @@ function MuonSach(props){
         setExpireDate(event.target.value);
         console.log(event.target.value);
       }
-      async function handleBorrow(){
-        const res = await axios.get("http://localhost:5000/loans/getThisBill", {params: {userId: props.id}});
+      async function handleBorrow(e){
+        e.preventDefault();
+        var a=prompt("Press 'y' to borrow books");
+        if(a==="y"){
+            const res = await axios.get("http://localhost:5000/loans/getThisBill", {params: {userId: props.id}});
 
-        if(res.data.tt === 'YES' || res.data.numOfBill === 0){
-           var borrowedBook = [];
-           for(let i = 0; i < cart.length; i++){
-                borrowedBook.push({bookId: cart[i]})
-           } 
-           var id = res.data.numOfBill + 1
-           var billID = props.id + id;
-           const bill = {
-                billID: billID,
-                userId: props.id,
-                username:props.email,
-                borrowDate: borrowDate,
-                returnDate: 'None',
-                expireDate: expireDate,
-                state: 'Borrowed',
-                borrowedBook: borrowedBook
-            }
-            console.log(props)
-            const res2 = await axios.post("http://localhost:5000/books/borrowBook", cart);
-           
-         
-            cart.splice(0, cart.length);
+            if(res.data.tt === 'YES' || res.data.numOfBill === 0){
+               var borrowedBook = [];
+               for(let i = 0; i < cart.length; i++){
+                    borrowedBook.push({bookId: cart[i]})
+               } 
+               var id = res.data.numOfBill + 1
+               var billID = props.id + id;
+               const bill = {
+                    billID: billID,
+                    userId: props.id,
+                    username:props.email,
+                    borrowDate: borrowDate,
+                    returnDate: 'None',
+                    expireDate: expireDate,
+                    state: 'Borrowed',
+                    borrowedBook: borrowedBook
+                }
             
-            const res1 = await axios.post("http://localhost:5000/loans/", bill);
-            alert("Mượn thành công")
-            navigate("/homepage")
-        }
-        else{
-            alert("Tồn tại đơn chưa trả")
+                const res2 = await axios.post("http://localhost:5000/books/borrowBook", cart);
+               
+             
+                cart.splice(0, cart.length);
+                
+                const res1 = await axios.post("http://localhost:5000/loans/", bill);
+                alert("Mượn thành công")
+                navigate("/homepage")
+            }
+            else{
+                alert("Tồn tại đơn chưa trả")
+                navigate("/homepage")
+            }
         }
       }
       function Book(props){

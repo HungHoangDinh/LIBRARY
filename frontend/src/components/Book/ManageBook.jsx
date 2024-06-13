@@ -267,7 +267,7 @@ function ManageBook(){
                                     <select value={search} onChange={handleChangeSearch} style={{marginRight: 23}}>
                                             <optgroup label="Filter">
                                                 <option value="name">Book name</option>
-                                                <option value="bookId">Book ID</option>
+                                                <option value="bookId">Book Tag</option>
                                                 <option value="publishor">Publisher</option>
                                                 <option value="author">Author</option>
                                                 <option value="category">Category</option>

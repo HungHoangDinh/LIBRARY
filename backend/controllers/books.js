@@ -12,7 +12,7 @@ export const getBook = async (req, res) => {
   try {
     console.log(req.query);
     const { bookId } = req.query;
-    const book = await Book.findOne({ _id: req.query._id});
+    const book = await Book.findOne({ _id: req.query.id});
     return res.status(200).json(book);
   } catch (err) {
     console.error(err);
