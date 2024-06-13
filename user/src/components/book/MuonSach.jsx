@@ -82,7 +82,8 @@ function MuonSach(props){
         }
       }
       function Book(props){
-        function handleDelete(){
+        function handleDelete(e){
+            console.log(props.id)
             const newItems = [...items];
             for(let i = 0; i < cart.length; i++){
                 if(cart[i] === props.id){
@@ -114,7 +115,7 @@ function MuonSach(props){
                     </div>
                 </div>
             </div>
-            </div><button className="btn btn-outline-success" type="button" style={{transform: 'translateX(811px) translateY(-363px) scale(0.70)',background: 'rgb(237,203,203)',borderColor: 'rgb(0,0,0)',width: 41}} onClick={handleDelete}><i className="fa fa-close border-primary" style={{color: 'rgb(0,0,0)',transform: 'translateX(0px) scale(1.49)'}} onClick={handleDelete}></i></button></div>
+            </div><button className="btn btn-outline-success" type="button" style={{transform: 'translateX(811px) translateY(-363px) scale(0.70)',background: 'rgb(237,203,203)',borderColor: 'rgb(0,0,0)',width: 41}} ><i className="fa fa-close border-primary" onClick={handleDelete} style={{color: 'rgb(0,0,0)',transform: 'translateX(0px) scale(1.49)'}} ></i></button></div>
         )
     }
     return (
@@ -129,7 +130,7 @@ function MuonSach(props){
                         <div className="content">
                             <div className="row g-0">
                                 <div className="col-md-12 col-lg-8" style={{height: 415.188}}>
-                                    <Book bookId={books[0].bookId} name={books[0].name} author={books[0].author} category={books[0].category} publishor={books[0].publishor} image={books[0].image}/>
+                                    <Book id={books[0]._id} name={books[0].name} author={books[0].author} category={books[0].category} publishor={books[0].publishor} image={books[0].image}/>
                                 </div>
                                 <div className="col-md-12 col-lg-4">
                                     <div className="bg-body-tertiary summary">
