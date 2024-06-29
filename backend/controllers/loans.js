@@ -15,7 +15,8 @@ export const getLoan = async (req, res) => {
         const books = [];
         for (let i = 0; i < bill.borrowedBook.length; i++){
             const book = await Book.findOne({_id: bill.borrowedBook[i].bookId})
-            books.push(book);
+            console.log(book)
+            if(book!==null)books.push(book);
         }
         const result = {
             bill: bill,
